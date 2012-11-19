@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>FTEST</title>
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+        <script src="../static/js/0.9.15.min.js"></script>
+        <script src="../static/js/csbox.js"></script>
+        
+        <script type="text/javascript">
+        $(document).ready(function() {
+            // derive background image name from mei
+            $('#csbox-wrapper').csbox({
+                debug: true,
+                width: 1000,
+                height: 700
+            });
+        });
+        </script>
+    </head>
+    <body>
+        <div id="csbox-wrapper"></div>
+    </body>
+</html>
