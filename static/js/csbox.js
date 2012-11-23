@@ -5,13 +5,15 @@
         var elem = $(element);
         var canvas;
         var maxDepth = 1;
+        var Neume, Sidebar, Class;
         
         // These are variables which can be overridden upon instantiation
         var defaults = {
             debug: false,
             width: 1000,
             height: 1000,
-            sidebarWidth: 0.2
+            sidebarWidth: 0.2,
+            classHeight: 0.04
         };
         
         var settings = $.extend({}, defaults, options);
@@ -43,40 +45,84 @@
             loadDesign(canvas);
         };
         
+        var addExamples = function(canvas, sidebar) {
+            sidebar.addClass("HELLO");
+            sidebar.addClass("Goodbye!");
+            sidebar.addClass("How's it going?")
+        }
+        
         var loadDesign = function(canvas) {
             var sidebarHeightPix = settings.height;
             var sidebarWidthPix = settings.width * settings.sidebarWidth;
             var sidebarX = sidebarWidthPix / 2;
             var sidebarY = sidebarHeightPix / 2;
-            var sidebar = new fabric.Rect({
+            
+            var Class = fabric.util.createClass(fabric.Object, fabric.Observable, {
+                initialize: function(options) {
+                    this.callSuper('initialize', options);
+                    this.neumes = [];
+                },
+                _render: new fabric.Rect()._render,
+                addNueme: function(name) {
+                    
+                }
+            });
+            
+            Sidebar = fabric.util.createClass(fabric.Object, fabric.Observable, {
+                initialize: function(options) {
+                    this.callSuper('initialize', options);
+                    this.classes = [];
+                },
+                _render: new fabric.Rect()._render,
+                addClass: function(name) {
+                    var classHeightPix = settings.height * settings.classHeight;
+                    var currentTop = classHeightPix * (this.classes.length + (1 / 2));
+                    var classWidthPix = this.width;
+                    var currentLeft = classWidthPix / 2;
+                    var newClass = new Class({
+                        top: currentTop,
+                        left: currentLeft,
+                        width: classWidthPix,
+                        height: classHeightPix,
+                        fill: 'rgb(210, 210, 230)',
+                        stroke: 'black'
+                    });
+                    this.classes.push(newClass);
+                    canvas.add(newClass);
+                }
+            });
+            
+            var sidebar = new Sidebar({
                 left: sidebarX,
                 top: sidebarY,
                 width: sidebarWidthPix,
                 height: sidebarHeightPix,
                 selectable: false,
-                fill: 'rgb(200, 200, 200)'
+                fill: 'rgb(200, 200, 200)',
+                stroke: 'black'
             });
             canvas.add(sidebar);
             
-            var classHeightPix = settings.height;
-            var classWidthPix = settings.width * (1.0 - settings.sidebarWidth);
-            var classX = (settings.width * settings.sidebarWidth) + (classWidthPix / 2);
-            var classY = classHeightPix / 2;
-            var classSpace = new fabric.Rect({
-                left: classX,
-                top: classY,
-                width: classWidthPix,
-                height: classHeightPix,
+            var classFrameHeightPix = settings.height;
+            var classFrameWidthPix = settings.width * (1.0 - settings.sidebarWidth);
+            var classFrameX = (settings.width * settings.sidebarWidth) + (classFrameWidthPix / 2);
+            var classFrameY = classFrameHeightPix / 2;
+            var classFrame = new fabric.Rect({
+                left: classFrameX,
+                top: classFrameY,
+                width: classFrameWidthPix,
+                height: classFrameHeightPix,
                 selectable: false,
-                fill: 'rgb(170, 170, 170)'
+                fill: 'rgb(170, 170, 170)',
+                stroke: 'black'
             });
-            canvas.add(classSpace);
+            canvas.add(classFrame);
             
-            var Neume = fabric.util.createClass(fabric.Object, fabric.Observable, {
+            Neume = fabric.util.createClass(fabric.Object, fabric.Observable, {
                 initialize: function(src, options) {
-                    this.callSuper('initialize,', options);
+                    this.callSuper('initialize', options);
                     this.image = new Image();
-                    this.image.src = src,
+                    this.image.src = src;
                     this.image.onload = (function() {
                         this.imgWidth = this.image.width;
                         this.imgHeight = this.image.height;
@@ -86,16 +132,17 @@
                     }).bind(this);
                 },
                 _render: function(ctx) {
-                    if (this.loaded) {
+                    //if (this.loaded) {
                         ctx.fillStyle = '#eee';
                         ctx.fillRect(
                             -this.width / 2,
                             -this.height / 2,
                             this.width,
                             this.height);
-                    }
+                    //}
                 }
             });
+            addExamples(canvas, sidebar);
         };
         
         init();
