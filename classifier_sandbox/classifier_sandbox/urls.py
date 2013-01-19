@@ -1,17 +1,18 @@
 from django.conf.urls import patterns, include, url
-
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
-
-urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'classifier_sandbox.views.home', name='home'),
-    # url(r'^classifier_sandbox/', include('classifier_sandbox.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+from django.contrib import admin
+admin.autodiscover()
+ 
+from rest_framework.urlpatterns import format_suffix_patterns
+ 
+urlpatterns = []
+ 
+urlpatterns += patterns('',
+    url(r'^admin/', include(admin.site.urls)),
+)
+ 
+urlpatterns += format_suffix_patterns(
+    patterns('classifier_sandbox.views',
+        url(r'^$', 'home'),
+        url(r'^browse/$', 'api_root'),
+    )
 )
