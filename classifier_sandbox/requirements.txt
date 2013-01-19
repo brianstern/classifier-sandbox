@@ -1,5 +1,6 @@
 Django==1.4.3
--e git+https://github.com/tomchristie/django-rest-framework.git@9d47c32f444c7c1563d1686f8f397a97116d1f5e#egg=djangorestframework-dev
+-e git+https://github.com/tomchristie/django-rest-framework.git@6385ac519defc8e434fd4e24a48a680845341cb7#egg=djangorestframework-dev
+gamera==3.4.0
 wsgiref==0.1.2
 wxPython==2.9.3.1
 wxPython-common==2.9.3.1
