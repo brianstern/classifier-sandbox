@@ -1,2 +1,0 @@
-from classifier_sandbox import glyph_preprocessor
-glyph_preprocessor.load_glyphs()
