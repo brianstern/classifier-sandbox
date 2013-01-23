@@ -31,5 +31,9 @@ def home(request):
         png = buf.getvalue()
         encoded_png = base64.b64encode(png)
         encoded_glyphs.append(encoded_png)
-    print encoded_glyphs
-    return render(request, 'index.html', {})
+    for glyph in encoded_glyphs:
+        print glyph
+        print ""
+    return render(request, 'index.html', {
+        'encoded_glyphs': encoded_glyphs
+    })
