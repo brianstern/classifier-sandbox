@@ -8,6 +8,9 @@
 
 @import <Foundation/CPObject.j>
 @import <Ratatosk/Ratatosk.j>
+@import "Scripts/Base64.js"
+@import "Scripts/Deflate.js"
+@import "Scripts/PNG.js"
 
 @implementation AppController : CPObject
 {
@@ -67,7 +70,37 @@
     var glyphTokens = encodedGlyphs.split(",");
     var tests = glyphTokens[0].split("[&#39;");
     var tests2 = tests[1].split("&#39;");
-    console.log(decode64(tests2[0]));
+    //console.log(decode64(tests2[0]));
+    String.prototype.padRight = function(c, n){
+    	var txt = '';
+    	for(var i=0;i<n-this.length;i++) txt += c;
+    	return txt + this;
+    };
+    
+    function show(data){
+    	var png = new PNG(data);
+    	var img = document.getElementById('image'), limg = document.getElementById('largeimage');
+    	document.getElementById('nativeimage').src = 'data:image/png;base64,' + data;
+    	img.innerHTML = '';
+    	limg.innerHTML = '';
+    	img.style.width = png.width + 'px';
+    	img.style.height = png.height + 'px';
+    	limg.style.width = (png.width * 3) + 'px';
+    	limg.style.width = (png.height * 3) + 'px';
+    	var line;
+    	while(line = png.readLine())
+    	{
+    		for (var x = 0; x < line.length; x++){
+    			var px = document.createElement('div'), px2 = document.createElement('div');
+    			px.className = px2.className = 'pixel';
+    			px.style.backgroundColor = px2.style.backgroundColor = '#' + line[x].toString(16).padRight('0', 6);
+    			img.appendChild(px);
+    			limg.appendChild(px2);
+    		}
+    	}
+    }
+    console.log(tests2[0]);
+    show(tests2[0]);
 }
 
 - (void)awakeFromCib

@@ -25,7 +25,9 @@
         <script type="text/javascript">
             OBJJ_MAIN_FILE = "{{ STATIC_URL }}/ClassifierSandbox/main.j";
         </script>
-
+        <script src="{{ STATIC_URL }}/ClassifierSandbox/Scripts/Base64.js" type="text/javascript"></script>
+        <script src="{{ STATIC_URL }}/ClassifierSandbox/Scripts/Deflate.js" type="text/javascript"></script>
+        <script src="{{ STATIC_URL }}/ClassifierSandbox/Scripts/PNG.js" type="text/javascript"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}/ClassifierSandbox/Frameworks/Objective-J/Objective-J.js" charset="UTF-8"></script>
 
         <style type="text/css">
@@ -73,6 +75,9 @@
                 </noscript>
             </div>
         </div>
+        <div id="image"></div>
+        <div id="largeimage"></div>
+        <img id="nativeimage" />
     </body>
 
 </html>
